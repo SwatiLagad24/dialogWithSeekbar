@@ -2,6 +2,7 @@ package com.example.dialogwithseekbar;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,46 +28,74 @@ public class FilterDialog extends Dialog {
         btnOk=findViewById(R.id.btnOK);
         seekBar=(SeekBar)findViewById(R.id.seekbar);
        message =findViewById(R.id.txt2);
-        this.seekBar.setMax(100);
-        this.seekBar.setProgress(15);
+       ch1BHK.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if(ch1BHK.isChecked()){
+                   int index=seekBar.getProgress();
+                   seekBar.setProgress(30);
+                   message.setText("Around  "+ String.valueOf(30)+"  Lakh");
+               }
+           }
+       });
+        ch2BHK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch2BHK.isChecked()){
+                    int index=seekBar.getProgress();
+                    seekBar.setProgress(50);
+                    message.setText("Around  "+ String.valueOf(50)+"  Lakh");
+                }
+            }
+        });
 
-        btnOk.setOnClickListener(new BtnOKClickListener());
+        ch3BHK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ch3BHK.isChecked()){
+                    int index=seekBar.getProgress();
+                    seekBar.setProgress(80);
+                    message.setText("Around  "+ String.valueOf(80)+"  Lakh");
+                }
+            }
+        });
+
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+
+
+                message.setText(String.valueOf(progress));
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            Toast.makeText(getContext(),"Tracking start",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+       btnOk.setOnClickListener(new BtnOKClickListener());
 
     }
 
-    class BtnOKClickListener implements View.OnClickListener{
+    class BtnOKClickListener implements View.OnClickListener {
         @Override
 
 
-        public void onClick(View view){
-            seekBar.setOnSeekBarChangeListener(
-                    new SeekBar.OnSeekBarChangeListener() {
-
-
-
-                        @Override
-                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-
-                            }
-
-                        @Override
-                        public void onStartTrackingTouch(SeekBar seekBar) {
-
-                        }
-
-                        @Override
-                        public void onStopTrackingTouch(SeekBar seekBar) {
-
-                        }
-
-
-                    }
-            );
+        public void onClick(View view) {
+            dismiss();
 
             }
+        }
+
+
     }
 
-
-
-}
